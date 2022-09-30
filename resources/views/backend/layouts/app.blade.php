@@ -32,6 +32,7 @@
     <!-- End Header -->
     @yield('content')
     <script src="{{ asset('backend/js/main.js') }}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     @yield('script')
 </body>
 

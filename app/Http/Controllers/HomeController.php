@@ -77,4 +77,9 @@ class HomeController extends Controller
     public function cacheStatus(){
         return view('backend.statistics');
     }
+
+    public function clearCache(Request $request)
+    {
+        # code...
+    }
 }

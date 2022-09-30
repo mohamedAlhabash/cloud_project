@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="btns">
-                    <button type="reset" class="btn">Clear</button>{{--ajax--}}
+                    <button type="reset" id="clear" class="btn">Clear</button>
                     <button type="submit" class="btn">OK</button>
                 </div>
 
@@ -31,4 +31,24 @@
         </div>
     </section>
     <!-- End cache setting  -->
+@stop
+
+@section('script')
+    <script>
+        let clearbtn = document.getElementById('clear');
+        clearbtn.onclick = () => {
+            $.ajax({
+            type: 'GET',
+            url: '{{ route('clearCache') }}',
+            data: null,
+            success: function (data, status) {
+                alert(data.message);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+        }
+
+    </script>
 @stop

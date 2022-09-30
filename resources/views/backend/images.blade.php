@@ -17,7 +17,7 @@
             </form>
         </div>
         <div class="preview-image">
-            <img width="500" height="500"
+            <img width="auto" height="auto"
                 src="{{ $attachment ? asset('uploads/' . $attachment->value) : asset('backend/img/no-image.jpg') }}">
         </div>
 
