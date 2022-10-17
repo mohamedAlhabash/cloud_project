@@ -544,11 +544,8 @@ section.keys div span {
 
 .statistics .card .stats .stats-box .stats-progress {
     position: relative;
-    background-color: var(--light);
     border-radius: 6px;
     height: 30px;
-    width: 100%;
-    overflow: hidden;
 }
 
 .statistics .card .stats .stats-box .stats-progress span {

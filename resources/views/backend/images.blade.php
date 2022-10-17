@@ -4,7 +4,7 @@
     <section class="upload container">
 
         <div class="card">
-            <form action="{{ route('showImage') }}" method="POst">
+            <form action="{{ route('showImage') }}" method="Post">
                 @csrf
                 <div>
                     <label for="key">Key</label>
@@ -17,9 +17,10 @@
             </form>
         </div>
         <div class="preview-image">
-            <img width="auto" height="auto"
-                src="{{ $attachment ? asset('uploads/' . $attachment->value) : asset('backend/img/no-image.jpg') }}">
+            <img width="550" height="550"
+                src="{{ $attachment != null ? asset('uploads/' . $attachment) : asset('backend/img/no-image.jpg') }}">
         </div>
+        <div>{{$source}}</div>
 
 
     </section>

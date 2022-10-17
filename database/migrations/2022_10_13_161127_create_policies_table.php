@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('statistics', function (Blueprint $table) {
+        Schema::create('policies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('num_items');
-            $table->unsignedDouble('current_capacity');
-            $table->unsignedInteger('requests_number');
-            $table->unsignedFloat('miss_rate');
-            $table->unsignedFloat('hit_rate');
+            $table->string('policy_name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statistics');
+        Schema::dropIfExists('policies');
     }
 };

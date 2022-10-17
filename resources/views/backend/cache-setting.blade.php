@@ -8,12 +8,13 @@
                 @csrf
                 <div class="policy">
                     <p>Replacement Policy:</p>
-                    <select name="policy" id="">
-                        <option value="">
-                            Select Policy
-                            <option value="Random_Replacement">Random Replacement</option>
-                            <option value="Least_Recently_Used">Least Recently Used</option>
-                        </option>
+                    <select name="policy_id">
+                        <option value="">Select Policy</option>
+                        @foreach ($policies as $policy)
+                            <option value="{{$policy->id}}">{{$policy->policy_name}}</option>
+                        @endforeach
+
+
                     </select>
                 </div>
 

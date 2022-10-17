@@ -4,37 +4,56 @@
     <section class="statistics container">
         <div class="card">
 
-            <div class="items">
-                <span>Number Of Items In Cache : 50 </span>
-            </div>
+            {{-- <div class="items">
+                <span>Number Of Items In Cache : {{ $num_items }} </span>
+            </div> --}}
 
             <div class="stats">
                 <div class="stats-box">
                     <div class="stats-name">
-                        <div class="before"></div> Hit Rate
+                        <div class=""></div> Number Of Items In Cache :
                     </div>
                     <div class="stats-progress">
-                        <span data-progress="80%"></span>
+                        <span>{{ $num_items }}</span>
                     </div>
                 </div>
-
+                <hr>
+                <div class="stats-box">
+                    <div class="stats-name">
+                        <div class=""></div> Replacement policy :
+                    </div>
+                    <div class="" style="height: 30px">
+                        <span>{{ $replacment_policy }}</span>
+                    </div>
+                </div>
+                <hr>
 
                 <div class="stats-box">
                     <div class="stats-name">
-                        <div class="before"></div> Miss Rate
+                        <div class=""></div> Hit Rate:
                     </div>
                     <div class="stats-progress">
-                        <span data-progress="50%"></span>
+                        <span>{{ round($hit_rate) }}%</span>
                     </div>
                 </div>
-
+                <hr>
 
                 <div class="stats-box">
                     <div class="stats-name">
-                        <div class="before"></div> Cache Utilization
+                        <div class=""></div> Miss Rate:
                     </div>
                     <div class="stats-progress">
-                        <span data-progress="80%"></span>
+                        <span>{{ round($miss_rate) }}%</span>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="stats-box">
+                    <div class="stats-name">
+                        <div class=""></div> Items size in the cache:
+                    </div>
+                    <div class="stats-progress">
+                        <span>{{ number_format($current_capacity / 1000000, 2)}}Mb</span>
                     </div>
                 </div>
 

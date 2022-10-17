@@ -21,14 +21,13 @@ Route::post('image', [HomeController::class, 'getImage'])->name('showImage');
 Route::get('keys',[HomeController::class,'keys'])->name('keys');
 Route::get('cache-config',[HomeController::class,'cacheConfig'])->name('cache-config');
 Route::post('cache-config',[HomeController::class,'storeCacheConfig'])->name('storeCacheConfig');
-// Route::get('cache-clear', [HomeController::class, 'clearCache'])->name('clearCache');
 
-Route::get('cache-clear', function() {
-    Artisan::call('cache:clear');
-    return ['message' => 'Cache is cleared'];
-})->name('clearCache');
+Route::get('cache-status', [HomeController::class, 'cacheStatus'])->name('cacheStatus');
+Route::post('cache-status', [HomeController::class, 'storeCacheStatus'])->name('storeCacheStatus');
 
-Route::get('cache-status',[HomeController::class,'cacheStatus'])->name('cache-status');
+Route::get('cache-clear', [HomeController::class, 'clearCache'])->name('clearCache');
+
 Route::get('/', function () {
+    dd(session()->get('cache'));
     return view('welcome');
 });
