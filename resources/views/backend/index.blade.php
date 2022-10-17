@@ -24,8 +24,22 @@
             </form>
         </div>
         <div class="preview-image">
-            <img src="{{ asset('backend/img/no-image.jpg') }}">{{--script--}}
+            <img id="imageUploaded" width="550" height="500" src="{{ asset('backend/img/no-image.jpg') }}">
         </div>
     </section>
     <!-- End Upload section -->
+@endsection
+@section('script')
+    <script>
+        let imgInp = document.getElementById('upload')
+        let image = document.getElementById('imageUploaded')
+
+        imgInp.onchange = evt => {
+            console.log(imgInp.files);
+            const [file] = imgInp.files
+            if (file) {
+                image.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 @endsection

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,13 @@ Route::post('image', [HomeController::class, 'getImage'])->name('showImage');
 Route::get('keys',[HomeController::class,'keys'])->name('keys');
 Route::get('cache-config',[HomeController::class,'cacheConfig'])->name('cache-config');
 Route::post('cache-config',[HomeController::class,'storeCacheConfig'])->name('storeCacheConfig');
-Route::get('cache-status',[HomeController::class,'cacheStatus'])->name('cache-status');
+
+Route::get('cache-status', [HomeController::class, 'cacheStatus'])->name('cacheStatus');
+Route::post('cache-status', [HomeController::class, 'storeCacheStatus'])->name('storeCacheStatus');
+
+Route::get('cache-clear', [HomeController::class, 'clearCache'])->name('clearCache');
+
 Route::get('/', function () {
+    dd(session()->get('cache'));
     return view('welcome');
 });

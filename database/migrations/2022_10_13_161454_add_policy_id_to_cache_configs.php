@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cache_configs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('capacity');
-            $table->timestamps();
+        Schema::table('cache_configs', function (Blueprint $table) {
+            $table->foreignId('policy_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cache_configs');
+        Schema::table('cache_configs', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('policy_id');
+        });
     }
 };
