@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Helper;
 
 use InvalidArgumentException;
-use Illuminate\Support\Facades\File;
 
 
 class CacheHelper implements CacheInterface
@@ -31,11 +30,10 @@ class CacheHelper implements CacheInterface
 
     public function add($key, $item, $item_size): void
     {
+        $item_encode = $this->encodeImage($item);
 
-        //increase current size
         $this->items_size += $item_size;
 
-        //no capacity
         while($this->size < $this->items_size) {
             $this->replacementPolicies();
         }
@@ -43,9 +41,9 @@ class CacheHelper implements CacheInterface
         // already on the list
         if (isset($this->items[$key])) {
             $old = $this->items[$key];
-            $oldSize = File::size(public_path('uploads/' . $old));
+            $oldSize = strlen(base64_decode($old));
 
-            $this->items[$key] = $item;
+            $this->items[$key] = $item_encode;
             $this->moveToFront($key);
 
             $this->items_size -= $oldSize;
@@ -53,7 +51,7 @@ class CacheHelper implements CacheInterface
             return;
         }
 
-        $this->items[$key] = $item;
+        $this->items[$key] = $item_encode;
     }
 
     public function get($key)
@@ -62,13 +60,18 @@ class CacheHelper implements CacheInterface
             return null;
         }
 
-        if(count($this->items) == 0) {
-            $this->items_size = 0;
-        }
-
         $this->moveToFront($key);
 
         return $this->items[$key];
+    }
+
+    private function encodeImage($item)
+    {
+        $path = public_path('uploads/'.$item);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
     }
 
     private function moveToFront(string $key): void
@@ -87,9 +90,7 @@ class CacheHelper implements CacheInterface
                 reset($this->items);
 
                 $oldItem = $this->items[key($this->items)];
-                $oldItemSize = File::size(public_path('uploads/'. $oldItem));
-
-                //remove the size of the element was deleted
+                $oldItemSize = strlen(base64_decode($oldItem));
                 $this->items_size -= $oldItemSize;
 
                 unset($this->items[key($this->items)]);
@@ -98,11 +99,9 @@ class CacheHelper implements CacheInterface
 
             case 'random replacement':
                 $replacment_key = array_rand($this->items);
+
                 $oldItem = $this->items[$replacment_key];
-
-                $oldItemSize = File::size(public_path('uploads/'. $oldItem));
-
-                //remove the size of the element was deleted
+                $oldItemSize = strlen(base64_decode($oldItem));
                 $this->items_size -= $oldItemSize;
 
                 unset($this->items[$replacment_key]);
